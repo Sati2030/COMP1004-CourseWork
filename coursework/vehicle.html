@@ -5,8 +5,8 @@
         <title>Vehicle Search</title>
         <link rel="stylesheet" href="styling.css">
     </head>
-    <body id="container">
-        <header>
+    <body id="container" class="main_grid">
+        <header id="container">
             <h1>Vehicle Search</h1>
             <ul>
                 <li>
@@ -21,9 +21,9 @@
             </ul>
         </header>
         <nav>
-            <img src="../assets/playwright_logo.png" alt="Playwright logo">
+            <img src="/assets/playwright_logo.png" alt="Playwright logo">
         </nav>
-        <main>
+        <form class="search_box">
             <ul>
                 <li>
                     <label for="registration">Search by registration (plate) number:</label>
@@ -32,11 +32,14 @@
                 <li>
                     <button type="button">Submit</button>
                 </li>
+                <li>
+                    <p id="message"></p>
+                </li>
             </ul>
-            <div>
+            <div id="results">
 
             </div>
-        </main>
+        </form>
         <footer>
             <p>This is a sample for the COMP1004 coursework.</p>
         </footer>
