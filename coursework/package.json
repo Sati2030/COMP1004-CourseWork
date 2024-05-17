@@ -2,7 +2,11 @@
   "name": "coursework",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -10,5 +14,9 @@
   "devDependencies": {
     "@playwright/test": "^1.44.0",
     "@types/node": "^20.12.12"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.2",
+    "vite": "^5.2.11"
   }
 }

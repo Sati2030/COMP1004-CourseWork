@@ -17,3 +17,15 @@ test('get started link', async ({ page }) => {
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
+
+test("error message", async({page}) => {
+  await page.goto("http://127.0.0.1:3000/people.html");
+
+  await page.getByLabel("Search by driver name:").fill("hola");
+
+  await page.getByRole("button").click();
+
+  const paragraph = page.locator("#message");
+
+  await expect(paragraph).toHaveText("");
+});

@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>Vehicle Search</title>
         <link rel="stylesheet" href="styling.css">
+        <script src="src/vehicle.js" type="module" defer></script>
     </head>
     <body id="container" class="main_grid">
         <header id="container">
@@ -24,13 +25,13 @@
             <img src="/assets/playwright_logo.png" alt="Playwright logo">
         </nav>
         <form class="search_box">
-            <ul>
+            <ul class="inputs">
                 <li>
-                    <label for="registration">Search by registration (plate) number:</label>
-                    <input type="text" name="registraton_number" id="registration">
+                    <label for="rego">Search by registration (plate) number:</label>
+                    <input type="text" name="registraton_number" id="rego">
                 </li>
                 <li>
-                    <button type="button">Submit</button>
+                    <button type="button" id="submitButton">Submit</button>
                 </li>
                 <li>
                     <p id="message"></p>
