@@ -73,7 +73,7 @@ async function search(){
                     // Create and append list items to the UL
                     const li = document.createElement("li");
                     li.className = "data_point"
-                    li.textContent = `${key}: ${value}`;
+                    li.innerHTML = `<strong>${key}: </strong>${value}`;
                     info.appendChild(li);
                 });
              

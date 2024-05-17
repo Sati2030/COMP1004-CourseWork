@@ -1,11 +1,15 @@
 {
     "configurations": [
-
         {
+            "name": "Add vehicle",
             "type": "chrome",
-            "name": "http://127.0.0.1:3000/vehicle.html",
             "request": "launch",
-            "url": "http://127.0.0.1:3000/vehicle.html"
+            "url": "http://127.0.0.1:3000/addvehicle.html",
+            "skipFiles": [
+                "$coursework/node_modules/**/*.js",
+                "$coursework/npm/**/*.ts",
+                "$coursework/node_modules/@supabase/**/*.ts"
+            ]
         }
     ]
 }

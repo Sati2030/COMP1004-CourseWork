@@ -6,11 +6,10 @@ const supaBaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const button = document.querySelector("#submitButton");
 const supabase = createClient(supaBaseURL,supaBaseKey);
 const message = document.querySelector("#message");
-const resultsPane = document.querySelector("#results");
+const resultsPane = document.querySelector("#results_vehicles");
 let rego;
 
 function checkMatch(x){
-
     if(x.VehicleID === rego){
         return true;
     }
@@ -37,16 +36,23 @@ async function search() {
 
         for(let x of data){
             if(checkMatch(x)){
+                found = true;
+
                 message.textContent = "Search successful";
 
                 const info = document.createElement("ul");
 
-                info.className="search_result";
+                info.className="search_resultV";
 
                 Object.entries(x).forEach(([key,value]) => {
                     const li = document.createElement("li");
                     li.className = "data_point";
-                    li.textContent = `${key}: ${value}`;
+                    if(!value){
+                        li.innerHTML = `<strong>${key}:</strong> (not found)`;
+                    }
+                    else{
+                        li.innerHTML = `<strong>${key}:</strong> ${value}`;
+                    }
                     info.appendChild(li);
                 });
 
@@ -65,6 +71,12 @@ async function search() {
 }
 
 button.addEventListener("click", () => {
+
+    const ul = resultsPane.querySelector("ul");
+
+    if(ul){
+        ul.remove();
+    }
     
     rego = document.querySelector("#rego").value;
 

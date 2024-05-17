@@ -16,6 +16,7 @@
     "@types/node": "^20.12.12"
   },
   "dependencies": {
+    "@supabase/auth-js": "^2.64.2",
     "@supabase/supabase-js": "^2.43.2",
     "vite": "^5.2.11"
   }
