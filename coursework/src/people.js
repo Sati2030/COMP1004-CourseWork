@@ -56,6 +56,8 @@ async function search(){
     }
     else{
 
+        resultsPane.innerHTML = "";
+
         let found = false;
 
         for(let x of data){
@@ -64,21 +66,19 @@ async function search(){
                 found = true;
                 message.textContent = "Search successful";
 
-                const info = document.createElement("ul");
+                const textArea =document.createElement("div");
+                textArea.className = "search_result"
 
-                info.className = "search_result";
-
-                Object.entries(x).forEach(([key, value]) => {
-                    console.log(`Key: ${key}, Value: ${value}`);
-                    // Create and append list items to the UL
-                    const li = document.createElement("li");
-                    li.id = "results";
-                    li.className = "data_point";
-                    li.innerHTML = `<strong>${key}: </strong>${value}`;
-                    info.appendChild(li);
+                let resultsHTML = "";
+                Object.entries(x).forEach(([key,value]) => {
+                    const entry = `<strong>${key}: </strong>${value}`;
+                    resultsHTML += `${entry}<br>`;
                 });
+                
+                textArea.innerHTML = resultsHTML;
+
+                resultsPane.appendChild(textArea);
              
-                resultsPane.append(info);
             }
         }
 
@@ -90,14 +90,6 @@ async function search(){
 }
 
 button.addEventListener("click",() => {
-
-    
-    const uls = resultsPane.querySelectorAll("ul");
-    if(uls){
-        for(let ul of uls){
-            ul.remove();
-        }
-    }
 
     if(!checkFilling()){
         return;

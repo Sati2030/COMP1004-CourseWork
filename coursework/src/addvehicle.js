@@ -8,21 +8,36 @@ const supabase = createClient(supabaseURL, supabaseKey);
 // DOM elements
 const button = document.querySelector("button");
 const message = document.querySelector("#message");
-const inputList = document.querySelector(".inputs");
+const inputListV = document.querySelector("#vehicleForm");
+const inputListO = document.querySelector("#ownerForm");
 let isOwner = false; 
 let owner; 
-const clonedForms = inputList.cloneNode(true);
 
 // Function to check if all fields are filled
 function checkFilled() {
-    const inputs = inputList.querySelectorAll("input");
-    for (let input of inputs) {
-        if (input.value.trim() === "") {
-            message.textContent = "Error: Please fill all fields.";
-            return false;
+    
+    let inputs;
+
+    if(isOwner){
+        inputs = inputListO.querySelectorAll("input");
+        for (let input of inputs) {
+            if (input.value.trim() === "") {
+                message.textContent = "Error: Please fill all fields.";
+                return false;
+            }
         }
+        return true;
     }
-    return true;
+    else{
+        inputs = inputListV.querySelectorAll("input");
+        for (let input of inputs) {
+            if (input.value.trim() === "") {
+                message.textContent = "Error: Please fill all fields.";
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 // Function to check if the owner exists in the database
@@ -34,9 +49,16 @@ async function ownerKnown() {
     
     if (error) {
         message.textContent = `Error: ${error.message}`;
+        return true;
+    }
+    
+    if(data.length > 0){
+        return true;
+    }
+    else{
+        isOwner = true;
         return false;
     }
-    return data.length > 0;
 }
 
 // Function to add vehicle data to the database
@@ -58,37 +80,20 @@ async function addV() {
 }
 
 // Function to set up the owner form
-function ownerForm() {
-    const ownerFields = [
-        { label: "Person ID:", id: "personid" },
-        { label: "Name:", id: "name" },
-        { label: "Address (city):", id: "address" },
-        { label: "Date of Birth (yyyy-mm-dd):", id: "dob" },
-        { label: "License number:", id: "license" },
-        { label: "Expiry date:", id: "expire" }
-    ];
+function toggleForms() {
+    if(isOwner){
+        vehicleForm.style.display = "none";
+        ownerForm.style.display = "block";
+        button.textContent = "Add Owner";
+    }
+    else{
+        vehicleForm.style.display = "block";
+        ownerForm.style.display = "none";
+        button.textContent = "Add vehicle";
+    }
 
-    inputList.innerHTML = "";
-    ownerFields.forEach(field => {
-        const entry = document.createElement("li");
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-
-        label.setAttribute("for", field.id);
-        label.textContent = field.label;
-        input.id = field.id;
-        input.type = "text";
-
-        entry.appendChild(label);
-        entry.appendChild(input);
-        inputList.appendChild(entry);
-    });
-
-    inputList.parentNode.insertBefore(button,message);
-
-    button.textContent = "Add Owner";
-    isOwner = true;
 }
+
 
 // Function to add owner data to the database
 async function addOwner() {
@@ -99,11 +104,6 @@ async function addOwner() {
     const license = document.querySelector("#license").value;
     const expire = document.querySelector("#expire").value;
 
-    if (personID !== owner) {
-        message.textContent = "Error: Person ID does not match the owner.";
-        return;
-    }
-
     const { error } = await supabase
         .from("People")
         .insert({ PersonID: personID, Name: name, Address: address, DOB: dob, LicenseNumber: license, ExpiryDate: expire });
@@ -111,8 +111,7 @@ async function addOwner() {
     if (error) {
         message.textContent = `Error: Couldn't add owner (${error.message})`;
     } else {
-        message.textContent = "Owner added successfully";
-        inputList.parentNode.replaceChild(clonedForms, inputList);
+        message.textContent = "Vehicle added successfully";
         isOwner = false;
     }
 }
@@ -124,12 +123,13 @@ button.addEventListener("click", async () => {
 
     if (isOwner) {
         await addOwner();
+        await toggleForms();
     } else {
         owner = document.querySelector("#owner").value;
         await addV();
 
         if (!await ownerKnown()) {
-            await ownerForm();
+            await toggleForms();
         }
     }
 });

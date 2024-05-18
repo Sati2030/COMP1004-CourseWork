@@ -6,7 +6,7 @@ const supaBaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const button = document.querySelector("#submitButton");
 const supabase = createClient(supaBaseURL,supaBaseKey);
 const message = document.querySelector("#message");
-const resultsPane = document.querySelector("#results_vehicles");
+const resultsPane = document.querySelector("#results");
 let rego;
 
 function checkMatch(x){
@@ -33,6 +33,7 @@ async function search() {
     else{
         
         let found = false;
+        resultsPane.innerHTML = "";
 
         for(let x of data){
             if(checkMatch(x)){
@@ -40,23 +41,19 @@ async function search() {
 
                 message.textContent = "Search successful";
 
-                const info = document.createElement("ul");
+                const resultsText = document.createElement("div");
+                resultsText.className = "search_resultV";
 
-                info.className="search_resultV";
-
+                let resultsHTML = "";
                 Object.entries(x).forEach(([key,value]) => {
-                    const li = document.createElement("li");
-                    li.className = "data_point";
-                    if(!value){
-                        li.innerHTML = `<strong>${key}:</strong> (not found)`;
-                    }
-                    else{
-                        li.innerHTML = `<strong>${key}:</strong> ${value}`;
-                    }
-                    info.appendChild(li);
-                });
+                    const entry = `<strong>${key}: </strong>${value}`;
+                    resultsHTML += `${entry}<br>`;
+                })
 
-                resultsPane.appendChild(info);
+                resultsText.innerHTML = resultsHTML;
+
+                resultsPane.appendChild(resultsText);
+
 
             }
 
@@ -71,12 +68,6 @@ async function search() {
 }
 
 button.addEventListener("click", () => {
-
-    const ul = resultsPane.querySelector("ul");
-
-    if(ul){
-        ul.remove();
-    }
     
     rego = document.querySelector("#rego").value;
 

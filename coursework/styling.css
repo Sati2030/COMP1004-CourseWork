@@ -76,7 +76,7 @@ aside img{
     border: 1px dotted black;
 }
 
-#results_vehicles{
+.results_vehicles{
     display: flex;
     flex-wrap: wrap;
     flex-grow: 1;
@@ -98,11 +98,6 @@ aside img{
     padding: 10px;
     font-size: 30px;
     list-style-type: none;
-}
-
-.data_point{
-    padding: 1px;
-    margin: 1px;
 }
 
 footer{
