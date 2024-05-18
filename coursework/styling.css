@@ -4,10 +4,11 @@
 
 .main_grid{
     grid-template-columns: 1fr 4fr;
-    grid-template-rows: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 3fr 90px;
 }
 
 header{
+    display: grid;
     grid-template-rows: 1fr 1fr;
     grid-column-start: 1;
     grid-column-end: 6;
@@ -26,9 +27,11 @@ header ul{
     display: flex;
     justify-content: space-around;
     list-style-type: none;
+    display: flex;
+    justify-content: space-around;
 }
 
-nav{
+aside{
     grid-column-start: 1;
     grid-column-end: 2;
     border: 1px solid black;
@@ -36,10 +39,9 @@ nav{
     padding: 10px;
 }
 
-nav img{
+aside img{
     width: 50%;
     height: auto;
-    margin-top: 20px;
 }
 
 .search_box{
@@ -65,7 +67,7 @@ nav img{
     font-weight: bold;
 }
 
-#results{
+.resultsPane{
     display: grid;
     grid-template-columns: repeat(4,1fr);
     grid-template-rows: repeat(3,1fr);
@@ -108,7 +110,6 @@ footer{
     border: 1px solid black;
     margin: 10px;
     padding: 10px;
-    height: 50px;
 }
 
 @media (max-width: 500px){
@@ -117,12 +118,11 @@ footer{
         grid-column-end: 6;
     }
 
-    nav{
+    aside{
         grid-column-start: 1;
         grid-column-end: 2;
         grid-row-start: 3;
         grid-row-end: 4;
-        height: 25%;
     }
 
     footer{

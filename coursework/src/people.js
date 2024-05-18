@@ -5,7 +5,7 @@ const supaBaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const button = document.querySelector("button");
 const supabase = createClient(supaBaseURL,supaBaseKey);
 const message = document.querySelector("#message");
-const resultsPane = document.querySelector("#results");
+const resultsPane = document.querySelector(".resultsPane");
 let name, license, emptyName, emptyLicense;
 
 function checkFilling(){
@@ -65,14 +65,15 @@ async function search(){
                 message.textContent = "Search successful";
 
                 const info = document.createElement("ul");
-                
+
                 info.className = "search_result";
 
                 Object.entries(x).forEach(([key, value]) => {
                     console.log(`Key: ${key}, Value: ${value}`);
                     // Create and append list items to the UL
                     const li = document.createElement("li");
-                    li.className = "data_point"
+                    li.id = "results";
+                    li.className = "data_point";
                     li.innerHTML = `<strong>${key}: </strong>${value}`;
                     info.appendChild(li);
                 });

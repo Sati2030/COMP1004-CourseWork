@@ -84,7 +84,7 @@ function ownerForm() {
         inputList.appendChild(entry);
     });
 
-    inputList.appendChild(button);
+    inputList.parentNode.insertBefore(button,message);
 
     button.textContent = "Add Owner";
     isOwner = true;
@@ -129,9 +129,7 @@ button.addEventListener("click", async () => {
         await addV();
 
         if (!await ownerKnown()) {
-            if (confirm("Do you want to add a new owner?")) {
-                await ownerForm();
-            }
+            await ownerForm();
         }
     }
 });
